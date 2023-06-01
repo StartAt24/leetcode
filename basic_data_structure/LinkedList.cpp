@@ -155,10 +155,27 @@ private:
     }
 
     Node* getNode(int index) {
-        Node* p = m_pHead.next;
+        Node* p = m_pHead->next;
         for (int i=0; i<index; i++) {
-            p = p.next;
+            p = p->next;
         }
+        // optimize
+        #if 0
+        if (index < _size>>1) {
+            // element stores in the first half.
+            Node* p = m_pHead.next;
+            for (int i=0; i<index; i++) {
+                p = p.next;
+            }
+        } else {
+            int step = _size - 1 - index;
+            Node* p = m_pTail->prev;
+            for (int i=0; i<step; i++) {
+                p = p->prev;
+            }
+        }
+        #endif;
+
         /*
         while (index--) {
             p = p.next;
