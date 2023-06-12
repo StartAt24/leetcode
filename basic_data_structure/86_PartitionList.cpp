@@ -1,3 +1,5 @@
+#include <iostream>
+#include <vector>
 struct ListNode{
     int val;
     ListNode* next;
@@ -13,8 +15,7 @@ public:
             return nullptr;
 
         // get target node;
-        auto targetNode = GetTargetNode(head, x);
-        auto targetValue = targetNode->val;
+        auto targetValue = x;
 
         // to store the node less than X
         ListNode dummyLeft{};
@@ -34,41 +35,41 @@ public:
                 tempRight->next = current;
                 tempRight = tempRight->next;
             }
+            auto temp = current->next;
+            current->next = nullptr;
+            current = temp;
         }
-
-        auto temp = current->next;
-        current->next = nullptr;
-        current = temp;
 
         // contact two list;
         tempLeft->next = dummyRight.next;
 
         return dummyLeft.next;
     }
-
-private:
-    ListNode* GetTargetNode(ListNode* head, int x) {
-        ListNode* slow = head;
-        ListNode* fast = head;
-        // 0 -> 1 -> 2 -> 3 -> 4
-        // 
-
-        if (x < 0) {
-            int len = -x;
-            while(len--) {
-                fast = fast->next;
-            }
-            while(fast) {
-                fast = fast->next;
-                slow = slow->next;
-            }
-        }
-        else {
-            while (x--) {
-                slow = slow->next;
-            }
-        }
-
-        return slow;
-    }
 };
+
+ListNode* MakeList(const std::vector<int>& arr) {
+    ListNode head, *current = &head;
+
+    for(auto i : arr) {
+        current->next = new ListNode(i);
+        current = current->next;
+    }
+    return head.next; 
+}
+
+void PrintList(const ListNode* head){
+    while(head) {
+        std::cout << head->val << " ";
+        head = head->next;
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::vector<int> s = {2, 1};
+    ListNode* head = MakeList(s);
+    Solution sol;
+    auto result = sol.partition(head, 2);
+    PrintList(result);
+    return 0;
+}
