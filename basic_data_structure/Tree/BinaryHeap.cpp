@@ -83,28 +83,8 @@ private:
 
 	// build from the last parient node;
 	void ReBuild() {
-		auto mini_tree_build = [this](int idx) {
-			T current = _container[idx];
-			T left_node = _container[idx * 2];
-
-			if (current < left_node) {
-				Swap(idx, idx * 2);
-				current = left_node;
-			}
-
-			// no right child
-			if (idx * 2 + 1 > size)
-				return;
-
-			const T& right_node = _container[idx * 2 + 1];
-			if (current < right_node) {
-				Swap(idx, idx * 2 + 1);
-			}
-			
-		};
-		for (int i = _size / 2; i > 1; i--) {
-			mini_tree_build(i);
-		}
+        for (int i=_size/2; i>0; i--)
+            Sink(i);
 	}
 
 	int biggerSon(int idx) {
