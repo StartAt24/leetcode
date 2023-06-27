@@ -37,3 +37,33 @@ public:
         return dummyHead.next;
     }
 };
+
+class Solution2 {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto NodeCompare = [](const ListNode* left, const ListNode* right){
+            return left->val > right->val;
+        };
+        std::priority_queue<ListNode*, std::vector<ListNode*>, decltype(NodeCompare)> minHeap(NodeCompare);
+        ListNode dummyHead{};
+        ListNode* cursor = &dummyHead;
+
+        for(auto list: lists){
+            if (list)
+                minHeap.push(list);
+        }
+        while(!minHeap.empty()){
+            cursor->next = minHeap.top();
+            cursor = cursor->next;
+
+            auto temp = minHeap.top()->next;
+            minHeap.top()->next = nullptr;
+
+            minHeap.pop();
+            if (temp)
+                minHeap.push(temp);
+        }
+
+        return dummyHead.next;
+    }
+};
