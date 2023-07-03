@@ -22,11 +22,10 @@ public:
             return nullptr;
         
         slow = head;
-        while(1) {
+        // NB! pay attentation to the check logic inside while, no more step forward.
+        while(slow != fast) {
             slow = slow->next;
             fast = fast->next;
-            if (slow == fast)
-                break;
         }
 
         return slow;
