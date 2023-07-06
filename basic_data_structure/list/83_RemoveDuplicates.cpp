@@ -12,24 +12,16 @@ public:
         if(!head)
             return nullptr;
 
-        ListNode* cursor = head;
-        ListNode dummyHead(-1000);
-        ListNode *slow = &dummyHead;
+        ListNode *slow = head, *fast = head;
 
-        while(1) {
-            if (!cursor)
-                break;
-            if (cursor->val != slow->val) {
-                slow->next = cursor;
-                cursor = cursor->next; 
+        while(fast) {
+            if (fast->val != slow->val){
+                slow->next = fast;
                 slow = slow->next;
-                // disconnect from next;
-                slow->next = nullptr;
             }
-            else {
-                cursor = cursor->next;
-            }
+            fast = fast->next;
         }
-        return dummyHead.next;
+        slow->next = nullptr;
+        return head;
     }
 };
