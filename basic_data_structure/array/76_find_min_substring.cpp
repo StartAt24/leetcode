@@ -37,11 +37,11 @@ public:
             // enough element added, need to shrink the window
             while (valid == targetSize) {
                 // update the min string here
+                // at this point the window is still qualified.
                 if (right - left < len) {
                     start = left;
                     len = right - left;
                 }
-
 
                 char c = s[left];
                 left++;
@@ -53,7 +53,8 @@ public:
                     window[c]--;
                 }
             }
-            // update len and start
+            // ！！！在这里更新是错误的，因为前面并不是 if else的关系，在while外
+            // 并不是说已经满足了搜索条件
             // int currentLen = right - (left - 1);
             // if (currentLen < len) {
             //     start = left - 1;
