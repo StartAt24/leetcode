@@ -111,6 +111,7 @@ public:
                 char d = s[left];
                 left++;
                 if (need.count(d)) {
+                    // at this point the valid status will be break.
                     if (window[d] == need[d])
                         valid--;
                     window[d]--;
