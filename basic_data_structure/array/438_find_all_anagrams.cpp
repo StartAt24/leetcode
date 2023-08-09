@@ -38,7 +38,7 @@ public:
 
         }
         #endif
-
+#if MYSolution
         if (s.size() == 0 || p.size() == 0 || p.size() > s.size())
             return vector<int>{};
 
@@ -74,6 +74,48 @@ public:
             char d = s[left];
             window[d]--;
             left++;
+        }
+        return ret;
+    #endif // MySoltution
+        vector<int> ret;
+        map<char, int> need, window;
+        int left = 0, right = 0, valid = 0;
+
+        for (auto c: p) {
+            need[c]++;
+        }
+
+        while (right < s.size()) {
+            char c = s[right];
+            right++;
+            // the window is [left, right), execlu
+
+            // update window
+            if (need.count(c)) {
+                window[c]++;
+                if(window[c] == need[c])
+                    valid++;
+            }
+
+            // if the window > p.size() need to shrink.
+            // here we need equal, since right is execlude.
+            // 0, 1, 2, 3, 4 
+
+
+            while(right-left >= p.size()) {
+                // now we meet the condition that the size of string in window  
+                if (valid == need.size()) {
+                    ret.push_back(left);
+                }
+
+                char d = s[left];
+                left++;
+                if (need.count(d)) {
+                    if (window[d] == need[d])
+                        valid--;
+                    window[d]--;
+                }
+            }
         }
         return ret;
     }
