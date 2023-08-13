@@ -42,3 +42,22 @@ public:
         return dummyHead.next;
     }
 };
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (!head || !head->next)
+            return head;
+        
+        if (head->val != head->next->val) {
+            head->next = deleteDuplicates(head->next);
+            return head;
+        }
+
+        while(head->next && head->next->val == head->val) {
+            head = head->next;
+        }
+        head = head->next;
+        return deleteDuplicates(head);
+    }
+};
