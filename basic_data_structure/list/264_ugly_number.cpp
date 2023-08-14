@@ -19,6 +19,8 @@ class Solution {
             next3 = ret[p3]*3;
             next5 = ret[p5]*5;
 
+            // 注意这里有去重的操作！！！
+            // 所以都是 if 而没有else, 当相同值出现时，同时跳过其他链表上的这个值
             ret[i] = std::min({next2, next3, next5});
             if (ret[i] == next2){
                 p2++;
