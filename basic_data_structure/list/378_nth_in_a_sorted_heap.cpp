@@ -25,7 +25,7 @@ public:
             for (int idx = 0; idx < listCount; idx++) {
                 const auto& currentList = matrix[idx];
                 int pointer = listIdx[idx];
-                if (pointer >= matrix[0].size())
+                if (pointer >= matrix.at(0).size())
                     continue;
                 int val = currentList[pointer];
                 if( val < minVal)
@@ -33,6 +33,8 @@ public:
             }
 
             for (int j = 0; j < listCount; j++) {
+                if(listIdx[j] >= matrix[0].size())
+                    continue;
                 int val = matrix[j][listIdx[j]];
                 if (val == minVal) {
                     listIdx[j]++;
