@@ -79,6 +79,10 @@ private:
 
 };
 
+class Solution3{
+
+};
+
 int main() {
     vector<vector<int>> matrix(2);
     vector<int> a;
