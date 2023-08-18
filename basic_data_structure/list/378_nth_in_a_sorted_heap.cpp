@@ -44,9 +44,39 @@ public:
 
             maxHeap.push(minVal);
         }
-
         return maxHeap.top();
     }
+};
+
+class Solution2 {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        // priority queue;
+        // minheap;
+        std::priority_queue<Point, std::vector<Point>, std::greater<Point>> minHeap;
+        // insert first element to
+        for (int i = 0; i < matrix.size(); i++) {
+            minHeap.push(Point(matrix[i][0], i, 0));
+        }
+
+        // pop K-1s element and the Kth one is the target one.
+        for (int i = 0; i < k-1; i++) {
+            auto current = minHeap.top();
+            minHeap.pop();
+            if(current.y != matrix.size() - 1) {
+                minHeap.push({matrix[current.x][current.y+1], current.x, current.y+1});
+            }
+        }
+        return minHeap.top().val;
+    }
+private:
+    // this struct represent a Point in the matrix
+    struct Point{
+        int val, x, y;
+        Point(int val, int x, int y):val(val), x(x), y(y) {}
+        bool operator> (const Point& other) const {return this->val > other.val;};
+    };
+
 };
 
 int main() {
