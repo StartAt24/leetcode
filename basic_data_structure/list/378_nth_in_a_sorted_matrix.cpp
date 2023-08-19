@@ -89,7 +89,7 @@ public:
 
         while (l<r) {
             int mid = (l + r)/2;
-            int count = countNum(k, matrix);
+            int count = countNum(mid, matrix);
 
             if (count >= k) {
                 r = mid;
