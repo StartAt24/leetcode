@@ -6,14 +6,32 @@ public:
         int l=0, r = nums.size()-1;
         int size = nums.size();
         vector<int> res(size);
+        // 这是一个一元二次方程，所以要考虑开口的方向。
+        // 开口方向向上则 两侧是向下递减的，则从 0 index开始填充
+        // 开口方向向下，则两侧是递增的，从 end index开始填充
+        int p = 0;
+        if(a>=0) {
+            p = 0;
+        } else {
+            p = nums.size() - 1;
+        }
+
         while(l<=r) {
             int left = f(nums[l], a, b, c);
             int right = f(nums[r], a, b, c);
             if (left > right) {
-                res[--size] = left;
+                if (a>=0) {
+                    res[p++] = right;
+                } else {
+                    res[p--] = left;
+                }
                 left++;
             } else {
-                res[--size] = right;
+                if (a>=0) {
+                    res[p++] = left;
+                } else {
+                    res[p--] = right;
+                }
                 right--;
             }
         }
