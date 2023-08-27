@@ -23,6 +23,7 @@ public:
     int sumRegion(int row1, int col1, int row2, int col2) {
         // top-left : row1, col1
         // bottom-right: row2, col2
+        // 这边并不是按照顶点算，而是在按照每个小矩阵里的元素算，所以最后一项减去的是 左上角点 之外的那个矩阵，即不包含左上角的点。
         int minus1_top = _sum_matrix[row2+1][col2+1] - _sum_matrix[row1][col2+1] - _sum_matrix[row2+1][col1] + _sum_matrix[row1][col1];
         return minus1_top;
     }
