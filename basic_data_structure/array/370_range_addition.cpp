@@ -15,7 +15,7 @@ private:
     void increasement(int start, int end, int val) {
         _diff[start] += val;
         if (end < _diff.size() - 1) {
-            _diff[end] -= val;
+            _diff[end+1] -= val;
         }
     }
     vector<int> result() {
