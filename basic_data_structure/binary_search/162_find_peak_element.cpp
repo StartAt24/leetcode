@@ -13,6 +13,9 @@ public:
                 left = mid + 1;
             } else if (mid_val > mid_right_val){
                 // mid 自身为峰值 或者 峰值在mid左侧
+                // 这里要注意搜索区间的变化，
+                // 如果是 mid+1 > mid的话，则说明 mid肯定不是峰值，可以在下一轮的循环中去掉，所以是 left = mid+1；
+                // 如果是 mid+1 < mid的话，则说明 mid自己可能是峰值，在下一轮的循环中仍然需要，所以是 right = mid;
                 right = mid;
             }
         }
