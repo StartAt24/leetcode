@@ -17,7 +17,7 @@ public:
             if (windowLen == 10) {
                 // enough char in the window 
                 _hashMap[_windowNumber]++;
-                if(_hashMap.contains(_windowNumber) > 1) {
+                if(_hashMap.contains(_windowNumber)) {
                     auto sbStr = s.substr(left, 10);
                     if(!_retCheck.contains(sbStr)) {
                         _retCheck[sbStr]++;
@@ -25,7 +25,8 @@ public:
                     }
                 }
 
-                removeFront(s[left]);
+                int l = charToNumber(s[left]);
+                removeFront(l);
                 left++;
             }
         }
@@ -44,13 +45,13 @@ private:
         return -1;
     }
 
-    int addBack(int n) {
-        _windowNumber*_r + n;
+    void addBack(int n) {
+        _windowNumber = _windowNumber*_r + n;
     }
 
-    int removeFront(int n) {
+    void removeFront(int n) {
         // string len is 10;
-        _windowNumber - n*_r^(10-1);
+        _windowNumber = _windowNumber - n*_r^(10-1);
     }
 
     const int _r = 4;
