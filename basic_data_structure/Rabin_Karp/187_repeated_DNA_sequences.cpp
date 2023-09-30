@@ -6,7 +6,7 @@ public:
         int left = 0, right = 0;
         vector<string> ret;
 
-        while(right < s.size()) {
+        while(right < s.size()-1) {
             int r = charToNumber(s[right]);
             addBack(r);
             right++;
@@ -16,7 +16,7 @@ public:
             int windowLen = right - left;
             if (windowLen == 10) {
                 // enough char in the window 
-                _hashMap[_windowNumber]++;
+ 
                 if(_hashMap.contains(_windowNumber)) {
                     auto sbStr = s.substr(left, 10);
                     if(!_retCheck.contains(sbStr)) {
@@ -25,6 +25,7 @@ public:
                     }
                 }
 
+                _hashMap[_windowNumber]++;
                 int l = charToNumber(s[left]);
                 removeFront(l);
                 left++;
@@ -51,7 +52,7 @@ private:
 
     void removeFront(int n) {
         // string len is 10;
-        _windowNumber = _windowNumber - n*_r^(10-1);
+        _windowNumber = _windowNumber - n*pow(_r, 9);
     }
 
     const int _r = 4;
