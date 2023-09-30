@@ -6,7 +6,7 @@ public:
         int left = 0, right = 0;
         vector<string> ret;
 
-        while(right < s.size()-1) {
+        while(right < s.size()) {
             int r = charToNumber(s[right]);
             addBack(r);
             right++;
