@@ -23,9 +23,10 @@ public:
                         _retCheck[sbStr]++;
                         ret.push_back(sbStr);
                     }
+                } else {
+                    _hashMap[_windowNumber]++;
                 }
 
-                _hashMap[_windowNumber]++;
                 int l = charToNumber(s[left]);
                 removeFront(l);
                 left++;
