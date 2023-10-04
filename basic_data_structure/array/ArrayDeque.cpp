@@ -48,6 +48,7 @@ public:
         } else {
             _last--;
         }
+        // delete element here;
 
         _size--;
     }
@@ -74,6 +75,8 @@ public:
         if (_size == _container.size()/4) {
             resize(_container.size()/2);
         }
+
+        // delete element here;
 
         if (_first == _container.size() - 1) {
             _first = 0;
