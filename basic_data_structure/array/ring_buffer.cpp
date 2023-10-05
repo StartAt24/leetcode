@@ -28,16 +28,16 @@ public:
         // r --- w _ _
         // case 2: 写了也读了一点
         // ***r --- w _ _
-        // case 3: 写了并且已经进入下一轮
-        // --w _ _ r--
+        // 这两种情况都可以直接读取
+        if (_read + s <= _container.size()) {
+            std::copy(_container.begin() + _read, _container.begin() + _read + s, out);
+        } else {
+            // case 3: 写了并且已经进入下一轮
+            // --w _ _ r--
+            std::copy(_container.begin() + _read, _container.end(), out);
+            std::copy(_container.begin(), _container.begin() + (_container.size() - _read), std::back_inserter(out));
+        }
 
-
-        // --w---r---
-        // case1: --w---***r
-        // case2: **r--w---***
-
-        // 应该根据实际读取的数据来赋值
-        // 
         _read = (_read + s) & _mask;
         _size -= s;
         return s;
@@ -46,6 +46,13 @@ public:
     int write(const vector<byte>& in, int s) {
         if (_size + s > _container.size()) {
             resize(_size + s);
+        }
+
+        // 情况 1: r---w_ _
+        if (_write >= _read) {
+            // 1.1 r --w 写入之后变为 r--**w
+            // 0,1,2,3,_,_
+            if (_container.size() - _write >= s)
         }
 
         _size += s;
