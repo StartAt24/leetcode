@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include <cstddef>
 
 class RingBuffer {
 public:
@@ -7,7 +8,7 @@ public:
         _mask = CeilToPowerOfTwo(cap) - 1;
     }
 
-    int read(vector<byte>& out, int s) {
+    int read(vector<std::byte>& out, int s) {
         if(IsEmpty()) {
             return 0;
         }
@@ -19,8 +20,16 @@ public:
         // 最多只能读取size个数据
         s = s < _size ? s : _size;
 
-        // r --- w
-        // ***r --- w
+        // 以下均为ringbuffer没满的情况
+        // 不存在元素位于写指针之后，
+        // 如果有的话 则说明队列已经满了，已经在前面的条件里被过滤了
+
+        // case 1: 写了但是没有读
+        // r --- w _ _
+        // case 2: 写了也读了一点
+        // ***r --- w _ _
+        // case 3: 写了并且已经进入下一轮
+        // --w _ _ r--
 
 
         // --w---r---
