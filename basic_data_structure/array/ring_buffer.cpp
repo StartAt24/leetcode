@@ -48,12 +48,24 @@ public:
             resize(_size + s);
         }
 
-        // 情况 1: r---w_ _
+        // case 1: r---w_ _
         if (_write >= _read) {
-            // 1.1 r --w 写入之后变为 r--**w
+            // case 1.1: r --w 写入之后变为 r--**w
             // 0,1,2,3,_,_
-            if (_container.size() - _write >= s)
+            if (_container.size() - _write >= s) {
+                std::copy(in.begin(), in.begin() + s, _container.begin() + _write);
+            } else {
+                // case 1.2: r---w 写入之后变为 **w _ _ r---*
+                int n1 = _container.size() - _write;
+                int n2 = s - n1;
+                std::copy(in.begin(), in.begin() + n1, _container.begin() + _write);
+                std::copy(in.begin() + n1, in.begin() + s, _container.begin());
+            }
+        } else {
+            std::copy(in.begin(), in.begin() + s, _container.begin() + _write);
         }
+
+        _write = (_write + s) & _mask;
 
         _size += s;
         return s;
