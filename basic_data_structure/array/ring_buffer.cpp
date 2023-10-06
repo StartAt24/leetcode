@@ -29,6 +29,9 @@ public:
         // case 2: 写了也读了一点
         // ***r --- w _ _
         // 这两种情况都可以直接读取
+        // _read 指向的是可读的元素的第一个的位置
+        // _write 指向的是可写元素的第一个的位置，
+        // 两者是等价的，所以说 if里的判断条件是一致的
         if (_read + s <= _container.size()) {
             std::copy(_container.begin() + _read, _container.begin() + _read + s, out);
         } else {
