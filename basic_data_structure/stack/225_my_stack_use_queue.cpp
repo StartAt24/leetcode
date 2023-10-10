@@ -1,4 +1,5 @@
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 class MyStack {
@@ -8,40 +9,32 @@ public:
     }
     
     void push(int x) {
-        _qIn.push(x);
+        // 将主队列和辅助队列对调
+        std::swap(_qMain, _qBackup);
+        // 将元素放进队列的头部，用来模拟stack的后进先出
+        _qMain.push(x);
+        while(!_qBackup.empty()){
+            _qMain.push(_qBackup.front());
+            _qBackup.pop();
+        }
     }
     
     int pop() {
-        MoveData();
-        int ret = _qOut.back();
-        _qOut.pop();
+        int ret = _qMain.front();
+        _qMain.pop();
         return ret;
     }
     
     int top() {
-        MoveData();
-        return _qOut.back();
+        return _qMain.front();
     }
     
     bool empty() {
-        return _qIn.empty() && _qOut.empty();
+        return _qMain.empty();
     }
-private:
-    void MoveData() {
-        if (_qOut.empty()) {
-            while(!_qIn.empty()) {
-                _qOut.push(_qIn.back());
-                _qOut.pop();
-            }
-        }
-    }
-    // stack
-    // top -------  end
-    // [1, 2, 3, 4, 5..
-    // queue
-    // [1, 2, 3, 4, 5]
-    // []
 
-    queue<int> _qIn;
-    queue<int> _qOut;
+private:
+
+    queue<int> _qMain;
+    queue<int> _qBackup;
 };
