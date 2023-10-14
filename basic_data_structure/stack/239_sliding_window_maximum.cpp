@@ -1,4 +1,5 @@
 #include <vector>
+#include <stack>
 using namespace std;
 
 class Solution {
@@ -12,14 +13,18 @@ public:
         }
 
         maxVec.push_back(firstMax);
+        stack<int> maxStk;
+        maxStk.push(firstMax);
 
+        int left = k, right = k;
         int currentIdx = k;
-        while (currentIdx < nums.size()) {
-            if (nums[currentIdx] > maxVec.back()) {
-                maxVec.push_back(nums[currentIdx]);
-            } else {
-                maxVec.push_back(maxVec.back());
+        
+        while (right < nums.size()) {
+            if (right - left >= k) {
+                
             }
+
+            
             currentIdx++;
         }
         return maxVec;
