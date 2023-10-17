@@ -15,6 +15,22 @@
 // push 2
 // 4, 2, 2  <-- the stack's final data
 
+// if we use queue?
+// 2, 1, 2, 4, 3
+// queue
+// push 3,
+// 3
+// pop 3
+// push 4
+// 4
+// push 2
+// 4, 2
+// push 1
+// 4, 2, 1
+// push 2
+// 这里就需要从 4开始遍历了。 之前是从1开始遍历, 并且我需要把这个元素pop出 queue才能拿到下一个
+// 然后再将这些元素 放回 queue中。这里增加了复杂性
+
 using namespace std;
 
 vector<int> nextGreaterElement(vector<int>& nums) {
