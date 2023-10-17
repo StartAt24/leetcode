@@ -2,11 +2,18 @@
 #include <vector>
 
 // 2, 1, 2, 4, 3
-// 3
+// stack
+// 3,
+// pop 3
+// push 4
 // 4
-// 4, 2,
-// 4, 2, 1,
-// 4, 2, 2
+// push 2
+// 4, 2
+// push 1
+// 4, 2, 1
+// pop 1
+// push 2
+// 4, 2, 2  <-- the stack's final data
 
 using namespace std;
 
