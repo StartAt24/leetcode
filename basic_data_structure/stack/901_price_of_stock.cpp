@@ -32,3 +32,26 @@ private:
 
     vector<int> _historyPrice;
 };
+
+class StockSpanner2 {
+public:
+    StockSpanner2() {
+
+    }
+    
+    int next(int price) {
+        // need to calcute the day of today
+        int count = 1;
+        while(_stk.empty() && _stk.top().first < price) {
+            count += _stk.top().second;
+            _stk.pop();
+        }
+        _stk.push({price, count});
+
+        return count;
+    }
+private:
+    // 记录两个，一个是 天数的index，一个是price用于在stack里去做比较。
+    // {price, count};
+    stack<std::pair<int, int>> _stk;
+};
