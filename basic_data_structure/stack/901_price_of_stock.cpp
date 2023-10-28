@@ -42,7 +42,7 @@ public:
     int next(int price) {
         // need to calcute the day of today
         int count = 1;
-        while(_stk.empty() && _stk.top().first < price) {
+        while(!_stk.empty() && _stk.top().first < price) {
             count += _stk.top().second;
             _stk.pop();
         }
