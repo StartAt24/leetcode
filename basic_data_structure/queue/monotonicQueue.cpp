@@ -13,7 +13,7 @@ class MonotonicQueue{
         }
         _maxQue.push_back(val);
 
-        while(!_minQue.empty() && val < _maxQue.back()) {
+        while(!_minQue.empty() && val < _minQue.back()) {
             _minQue.pop_back();
         }
         _minQue.push_back(val);

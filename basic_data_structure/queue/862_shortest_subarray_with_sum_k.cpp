@@ -4,7 +4,7 @@
 using namespace std;
 
 class MonotonicQueue{
-
+public:
     void pushBack(int val){
         _container.push_back(val);
 
@@ -14,7 +14,7 @@ class MonotonicQueue{
         }
         _maxQue.push_back(val);
 
-        while(!_minQue.empty() && val < _maxQue.back()) {
+        while(!_minQue.empty() && val < _minQue.back()) {
             _minQue.pop_back();
         }
         _minQue.push_back(val);
@@ -45,6 +45,10 @@ class MonotonicQueue{
         return _minQue.front();
     }
 
+    bool empty(){
+        return _container.empty();
+    }
+
 private:
     deque<int> _container;
     deque<int> _maxQue;
@@ -61,10 +65,22 @@ public:
         for (int i = 0; i < nums.size(); i++) {
             preSum[i+1] = preSum[i] + nums[i];
         }
+        int left = 0, right = 0;
+        int len = INT_MAX;
 
+        while (right < preSum.size()) {
+            _window.pushBack(nums[right]);
+            right++;
 
-        
-        
+            // 这里right已经+1了
+            // 说明得到了符合条件的子数组，缩小窗口，使得子数组长度尽可能小
+            while(right < preSum.size() && !_window.empty() && preSum[right] - _window.min() >= k) {
+                len = min(len, right - left);
+                _window.popFront();
+                left++;
+            }
+        }
+        return len == INT_MAX ? -1 : len; 
     }
 private:
     MonotonicQueue _window;
