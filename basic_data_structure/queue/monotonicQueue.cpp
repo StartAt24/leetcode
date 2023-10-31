@@ -3,7 +3,7 @@
 using namespace std;
 
 class MonotonicQueue{
-
+public:
     void pushBack(int val){
         _container.push_back(val);
 
