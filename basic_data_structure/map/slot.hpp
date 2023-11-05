@@ -49,6 +49,10 @@ public:
         return found != _container.end();
     }
 
+    auto& Entry() {
+        return _container;
+    }
+
 private:
     std::list<std::pair<Key, Value>> _container;
     int _size = 0;
