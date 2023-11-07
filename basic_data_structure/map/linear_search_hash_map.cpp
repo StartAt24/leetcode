@@ -13,6 +13,10 @@ public:
     }
 
     void Delete(K k) {
+        // find the target element.
+        // remove this element.
+        // move the rest element that shares the same hash number.
+        //NB! 具体的move方法是，先Delete 再 Insert。 这样后续的元素会自动往前挪动。
         _size--;
     }
 
