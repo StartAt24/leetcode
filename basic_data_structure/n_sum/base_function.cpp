@@ -12,6 +12,8 @@ vector<vector<int>> twoSumTarget(vector<int>& nums, int target) {
         int rightValue = nums[right];
         if (sum < target) {
             // increase left, and skip same value;
+            // 如果没有 left < right这个条件，后面方位left index对于的元素的时候 可能会越界
+            // 当然也可以直接判断是否在界内？
             while(left < right && nums[left] == leftValue)
                 left++;
         }
