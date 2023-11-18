@@ -2,13 +2,14 @@
 // use the actual map to store a mapping between k and pair
 // looks like use two data struture at the same time.
 
+template<typename Key, typename Value>
 class Map{
 public:
     void insert(){
 
     }
 
-    void erase(){
+    void erase(Key k){
 
     }
 
@@ -20,8 +21,8 @@ public:
 
     }
 
-    void find() {
-
+    Value find(Key k) {
+        throw std::exception("not found");
     }
 
     int count() {
