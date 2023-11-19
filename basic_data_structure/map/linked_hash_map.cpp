@@ -56,3 +56,37 @@ private:
     std::unordered_map<Key, Node*> _container;
     std::list<Node*> _keyList;
 };
+
+template<typename K, typename V>
+class CLinkedHashMap{
+    using iter = std::unordered_map<K, V>::iterator;
+public:
+    iter Get(K k) {
+        return _map[k];
+    }
+
+    void Set(K k, V v) {
+        auto it = _map.find(k);
+        if (it != _map.end()) {
+            // modify
+            it->second.second = v;
+        } else {
+            // add new
+            auto p = std::make_pair(k, v);
+            _list.push_back(p);
+            _map[k] = std::prev(_list.end());
+        }
+    }
+
+    void delete(K k) {
+        auto it = _map[k];
+        _list.erase(it);
+        _map.erase(k);
+    }
+
+
+private:
+    std::list<std::pair<K, V>> _list;
+    // map里存放的是 K -> Node(K,V) 的mapping.
+    std::unordered_map<K, std::list<std::pair<K,V>>::iterator> _map;
+};
