@@ -59,7 +59,7 @@ private:
 
 template<typename K, typename V>
 class CLinkedHashMap{
-    using iter = std::unordered_map<K, V>::iterator;
+    using iter = std::list<std::pair<K, V>>::iterator;
 public:
     iter Get(K k) {
         return _map[k];
