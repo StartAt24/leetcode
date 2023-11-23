@@ -3,7 +3,7 @@ using namespace std;
 class LFUCache {
 public:
     LFUCache(int capacity) {
-
+        _cap = capacity;
     }
     
     int get(int key) {
@@ -15,4 +15,5 @@ public:
     }
 private:
     vector<int> container;
+    int _cap;
 };
