@@ -1,9 +1,12 @@
 #include <vector>
+#include <list>
+#include <map>
+
 using namespace std;
 class LFUCache {
+using iter = list<pair<int, int>>::iterator;
 public:
-    LFUCache(int capacity) {
-        _cap = capacity;
+    LFUCache(int capacity): _cap(capacity) {
     }
     
     int get(int key) {
@@ -14,6 +17,7 @@ public:
 
     }
 private:
-    vector<int> container;
+    list<pair<int, int>> _list;
+    map<int, iter> _map;
     int _cap;
 };
