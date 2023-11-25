@@ -14,7 +14,7 @@ public:
             int count = k;
             int tempIdx = idx;
             while(count-- && tempIdx < n) {
-                temp.insert({idx, nums[tempIdx]});
+                temp.insert({tempIdx, nums[tempIdx]});
                 tempIdx++;
             }
 
