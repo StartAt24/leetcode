@@ -1,4 +1,5 @@
 #include <stack>
+#include <map>
 
 using namespace std;
 class FreqStack{
@@ -10,6 +11,8 @@ public:
     int pop(){
         return -1;
     }
-private:
 
+private:
+    int _maxFreq;
+    unordered_map<int, int> _freqToElement;
 };
