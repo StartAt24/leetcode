@@ -1,7 +1,8 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <SET>
+#include <set>
+#include <queue>
 using namespace std;
 #if 0
 class Twitter {
@@ -65,7 +66,7 @@ private:
 
 class Tweet{
 public:
-    Tweet(int id) : _id(id) {
+    Tweet(int id, int timestamp) : _id(id), _timestamp(timestamp) {
     }
 
     int ID(){
@@ -90,11 +91,11 @@ public:
         return _id;
     }
 
-    void Post(int tweetId) {
-        _tweets.push_back(Tweet(tweetId));
+    void Post(Tweet t) {
+        _tweets.push_back(t);
     }
 
-    const auto& GetTwitt() {
+    const auto& GetTweets() {
         return _tweets;
     }
 
@@ -104,6 +105,13 @@ public:
 
     void Unfollow(int user) {
         _followees.erase(user);
+    }
+
+    set<User> Followees() {
+        auto temp = _followees;
+        // add user self;
+        temp.insert(*this);
+        return temp;
     }
 
 private:
@@ -119,11 +127,37 @@ public:
     }
     
     void postTweet(int userId, int tweetId) {
-        _users[userId].PostA(tweetId);
+        _users[userId].Post(Tweet(tweetId, _globalTimestamp++));
     }
     
     vector<int> getNewsFeed(int userId) {
+        const auto& user = _users[userId];
+        // get this users followee;
+        const auto& followees = user.Followees();
 
+        // 创建一个minheap
+        auto cmp = [](Tweet l, Tweet r) {
+            return l.Timestamp() > r.Timestamp();
+        };
+
+        std::priority_queue<Tweet, decltype(cmp)> _minHeap;
+
+        for (const auto& followee : followees) {
+            for(const auto tweet : followee.GetTweets())
+                _minHeap.push(tweet);
+        }
+
+        // 合并N条有序链表
+        vector<int> ret;
+        int limit = _countLimit; 
+        while(!_minHeap.empty() && limit) {
+            auto t = _minHeap.top();
+            ret.push_back(t.ID());
+            _minHeap.pop();
+            limit--;
+        }
+
+        return ret;
     }
     
     void follow(int followerId, int followeeId) {
@@ -135,4 +169,6 @@ public:
     }
 private:
     unordered_map<int, User> _users;
+    int _globalTimestamp = 0;
+    const int _countLimit = 10;
 };
