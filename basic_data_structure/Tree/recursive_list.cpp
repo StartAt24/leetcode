@@ -28,11 +28,14 @@ public:
     }
 
     int RemoveFirst() {
-
+        Node* temp = _first;
+        _first = _first->next;
+        delete temp;
         _size--;
     }
 
     int RemoveLast() {
+        RemoveLastNode(_first);
         _size--;
     }
 
@@ -45,6 +48,14 @@ private:
         if (n->next == nullptr)
             return n;
         return LastNode(n->next);
+    }
+
+    Node* RemoveLastNode(Node* n) {
+        if (n->next == nullptr)
+            return nullptr;
+
+        n->next = RemoveLastNode(n->next);
+        return n;
     }
 
 private:
