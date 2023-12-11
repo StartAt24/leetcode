@@ -44,6 +44,25 @@ private:
         return LastNode(_first);
     }
 
+    Node* AddLast(int val, Node* n) {
+        if (n == nullptr)
+            return new Node(val);
+        n = AddLast(val, n->next);
+        return n;
+    }
+
+    // x->y->z->null
+    Node* AddIndex(int val, int idx, Node* n) {
+        if (idx == 1) {
+            Node* newNode = new Node(val);
+            newNode->next = n->next;
+            return newNode;
+        }
+
+        n = AddIndex(val, idx-1, n->next);
+        return n;
+    }
+
     Node* RemoveIndex(int idx, Node* n) {
         if (idx == 0)
             return n->next;
