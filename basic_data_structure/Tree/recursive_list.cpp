@@ -35,7 +35,7 @@ public:
     }
 
     int RemoveLast() {
-        RemoveLastNode(_first);
+        _first = RemoveLastNode(_first);
         _size--;
     }
 
@@ -44,12 +44,30 @@ private:
         return LastNode(_first);
     }
 
+    Node* RemoveIndex(int idx, Node* n) {
+        if (idx == 0)
+            return n->next;
+        n->next = RemoveIndex(idx-1, n->next);
+        return n;
+    }
+
+    Node* GetNode(int idx) {
+        return GetNode(_first, idx);
+    }
+
+    Node* GetNode(Node* start, int idx){
+        if (idx == 0)
+            return start;
+        return GetNode(start->next, idx-1);
+    }
+
     Node* LastNode(Node* n) {
         if (n->next == nullptr)
             return n;
         return LastNode(n->next);
     }
 
+    // 1->2->3->nullptr
     Node* RemoveLastNode(Node* n) {
         if (n->next == nullptr)
             return nullptr;
