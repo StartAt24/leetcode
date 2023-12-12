@@ -59,7 +59,7 @@ private:
             return newNode;
         }
 
-        n = AddIndex(val, idx-1, n->next);
+        n->next = AddIndex(val, idx-1, n->next);
         return n;
     }
 
