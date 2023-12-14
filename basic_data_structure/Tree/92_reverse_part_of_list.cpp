@@ -10,43 +10,33 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        int begin = left;
-        while(left>=1) {
-            head = head->next;
-            left--;
+        if (left == 1) {
+            return recursiveReverse(head, right);
         }
 
-        ListNode* prev = head;
-        head = head->next;
-        ListNode* after = head;
+        // 一路前进到 反转的起点，并且触发基础条件里的 recursive
+        head->next = reverseBetween(head->next, left-1, right-1);
 
-        ListNode* last = reverse(head, right - begin + 1);
-        prev->next = last; 
-        after->next = ;
+        return head;
     }
 
 private:
-    ListNode* reverse(ListNode* head, int num) {
-        // a->b->c->d
-        // d->c->b->a
-        // a<-b<-c<-d
-        ListNode* p1 = nullptr;
-        ListNode* p2 = head;
-        ListNode* p3 = head->next;
-
-        while(num) {
-            p2->next = p1;
-            if (p3 == nullptr)
-                break;
-
-            p1 = p2;
-            p2 = p3;
-            p3 = p3->next;
-            num --;
+    // reverse first Ns elements;
+    ListNode* recursiveReverse(ListNode* head, int n) {
+        if (n == 1) {
+            _seccessor = head->next;
+            return head;
         }
 
-        return p2;
+        ListNode* lastOne = recursiveReverse(head->next, n-1);
+
+        head->next->next = head;
+        head->next = _seccessor;
+
+        return lastOne;
     }
+
+    ListNode* _seccessor = nullptr;
 };
 
 class Test{
@@ -72,4 +62,44 @@ public:
         return p2;
     }
 
+};
+
+class Test{
+public:
+    ListNode* reverse(ListNode* head) {
+        // a->b->c->d
+        // d->c->b->a
+        // a<-b<-c<-d
+        ListNode* p1 = nullptr;
+        ListNode* p2 = head;
+        ListNode* p3 = head->next;
+
+        while(1) {
+            p2->next = p1;
+            if (p3 == nullptr)
+                break;
+
+            p1 = p2;
+            p2 = p3;
+            p3 = p3->next;
+        }
+
+        return p2;
+    }
+private:
+    ListNode* recursiveReverse(ListNode* head) {
+        if (!head || !head->next)
+            return head;
+        
+        ListNode* lastOne = recursiveReverse(head->next);
+        // a->b(->null)<-c<-d
+
+        head->next->next = head;
+        // a<-b<-c<-d;
+
+        head->next = nullptr;
+        // nullptr<-a<-b<-c<-d;
+
+        return lastOne;
+    }
 };
