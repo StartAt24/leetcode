@@ -8,6 +8,9 @@ public:
     }
     
     void addNum(int num) {
+        if (!_minHeap.empty() && num > _minHeap.top()) {
+
+        }
 
     }
     
