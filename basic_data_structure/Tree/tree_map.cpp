@@ -74,14 +74,32 @@ public:
         if (IsEmpty()) {
             return;
         }
+        _root = RemoveMin(_root);
+    }
 
+    Node* RemoveMin(Node* node) {
+        if (node->left == nullptr) {
+            return node->right;
+        }
+
+        node->left = RemoveMin(node->left);
+
+        return node;
     }
 
     void RemoveMax() {
         if (IsEmpty()) {
             return;
         }
+        _root = RemoveMax(_root);
+    }
 
+    Node* RemoveMax(Node* node) {
+        if (node->right == nullptr)
+            return node->left;
+        
+        node->right = RemoveMax(node->right);                                   `
+        return node;
     }
 
 private:
