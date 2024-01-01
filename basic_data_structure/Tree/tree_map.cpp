@@ -77,7 +77,10 @@ public:
         _root = RemoveMin(_root);
     }
 
+
     Node* RemoveMin(Node* node) {
+        // if the node is the most left one, need to return the right one 
+        // to keep the struct of the tree.
         if (node->left == nullptr) {
             return node->right;
         }
