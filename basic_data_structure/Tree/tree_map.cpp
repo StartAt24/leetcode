@@ -70,13 +70,43 @@ public:
         }
     }
 
+    // remove k and return deleted value;
+    int Remove(int k) {
+        Remove(_root, k);
+    }
+
+    Node* Remove(Node* node, int k) {
+        if (k > node->key) {
+            node->right = Remove(node->right, k);
+        } else if (k < node->key) {
+            node->left = Remove(node->left, k);
+        } else {
+            // 找到了当前的元素，需要删除
+            // 删除有三种情况。
+            // 1.元素为叶子节点，直接删除即可
+            // 2.元素的左右子树其中一个为nullptr, 直接将另一个子树接在父节点的相同位置上
+            // 这段代码也同时处理了 情况1.
+            if (node->left == nullptr)
+                return node->right;
+            if (node->right == nullptr)
+                return node->left;
+
+            // 两个子树均不为空，这个时候需要将左子树的最大节点 或者 右子树的最小节点与当前节点交换，
+            // 来保持BST的定义
+            Node* maxLeft = MaxNode(node->left);
+            node->left = RemoveMax(node->left);
+            node = maxLeft;
+        }
+
+        return node;
+    }
+
     void RemoveMin() {
         if (IsEmpty()) {
             return;
         }
         _root = RemoveMin(_root);
     }
-
 
     Node* RemoveMin(Node* node) {
         // if the node is the most left one, need to return the right one 
@@ -106,6 +136,13 @@ public:
     }
 
 private:
+    Node* MaxNode(Node* node) {
+        while(node->right) {
+            node = node->right;
+        }
+        return node;
+    }
+
     bool IsEmpty () {
         return _size == 0;
     }
