@@ -121,11 +121,58 @@ public:
     }
 
     int FloorKey(int key) {
-
+        return FloorKey(key, _root)->key;
     }
 
-    int CeilingKey(int key) {
+    Node* FloorKey(int key, Node* node) {
+        // key not exist;
+        if (node == nullptr)
+            return nullptr;
 
+        // key may exist in right tree;
+        if (key > node->key) {
+            // 如果右子树里不存在floorkey的话，当前这个node就是小于key的存在的最大key。
+            auto n =  FloorKey(key, node->right);
+            if (n == nullptr) {
+                return node;
+            }
+            return n;
+        }
+
+        // key may exisit in left tree;
+        if (key < node->key) {
+            return FloorKey(key, node->left);
+        }
+
+        return node;
+    }
+
+    Node* CeilingKey(int key) {
+        return CeilingKey(key, _root);
+    }
+    
+    Node* CeilingKey(int key, Node* node) {
+        // key not exist;
+        if (node == nullptr)
+            return nullptr;
+
+        // key may exist in right tree;
+        if (key > node->key) {
+            auto n =  FloorKey(key, node->right);
+            return n;
+        }
+
+        // key may exisit in left tree;
+        // 如果左子树里不存在floorkey的话，当前这个node就是小于key的存在的最大key。
+        if (key < node->key) {
+            auto n =  FloorKey(key, node->right);
+            if (n == nullptr) {
+                return node;
+            }
+            return n;
+        }
+
+        return node;
     }
 
     void RemoveMax() {
