@@ -120,6 +120,14 @@ public:
         return node;
     }
 
+    int FloorKey(int key) {
+
+    }
+
+    int CeilingKey(int key) {
+
+    }
+
     void RemoveMax() {
         if (IsEmpty()) {
             return;
