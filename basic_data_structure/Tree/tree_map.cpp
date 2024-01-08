@@ -1,4 +1,6 @@
 #include <map>
+#include <vector>
+using std::vector;
 
 struct Node {
     Node* left=nullptr;
@@ -122,6 +124,18 @@ public:
 
     int FloorKey(int key) {
         return FloorKey(key, _root)->key;
+    }
+
+    vector<int> Keys() {
+        vector<int> vec;
+        Keys(_root, vec);
+        return vec;
+    }
+
+    void Keys(Node* node, vector<int>& vec) {
+        Keys(node->left, vec);
+        vec.push_back(node->key);
+        Keys(node->right, vec);
     }
 
     Node* FloorKey(int key, Node* node) {
