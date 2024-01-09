@@ -132,7 +132,33 @@ public:
         return vec;
     }
 
+    vector<int> Keys(int min, int max) {
+        vector<int> res;
+        Keys(_root, min, max, res);
+        return res;
+    }
+
+    void Keys(Node* node, int min, int max, vector<int>& vec) {
+        // basic condition.
+        if (!node)
+            return;
+        
+        int currentKey = node->key;
+        if (min < currentKey) {
+            Keys(node->left, min, max, vec);
+        }
+
+        vec.push_back(node->key);
+        if (max > currentKey)
+        {
+            Keys(node->right, min, max, vec);
+        }
+        
+        return;
+    }
+
     void Keys(Node* node, vector<int>& vec) {
+        if (!node) return;
         Keys(node->left, vec);
         vec.push_back(node->key);
         Keys(node->right, vec);
