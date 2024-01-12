@@ -11,6 +11,8 @@ struct Node {
 
     int val;
     int key;
+    // 以当前节点为根的 节点个数（包含当前节点
+    int size;
 };
 
 class TreeMap {
@@ -44,6 +46,9 @@ public:
         if (k == node->key) {
             node->val = v;
         }
+
+        // 
+        node->size = node->left->size + node->right->size + 1;
 
         return node;
     }
@@ -100,6 +105,10 @@ public:
             node = maxLeft;
         }
 
+        // update node's size;
+
+        node->size = node->left->size + node->right->size + 1;
+
         return node;
     }
 
@@ -118,7 +127,8 @@ public:
         }
 
         node->left = RemoveMin(node->left);
-
+        
+        node->size = node->left->size + node->right->size + 1;
         return node;
     }
 
@@ -219,8 +229,26 @@ public:
 
     }
 
+    // 返回的是 小于当前key的个数, 需要在node节点中增加新的成员变量来辅助完成
     int Rank(int key) {
+        return Rank(key, _root);
+    }
 
+    int Rank(int key, Node* node) {
+        if (!node)
+            return 0;
+        
+        // 如果key 比 node的key要小
+        if(key < node->key) {
+            return Rank(key, node->left);
+        }
+
+        if (key > node->key) {
+            return node->left->size + 1 + Rank(key, node->right);
+        }
+
+        // key == node->key
+        return node->left->size;
     }
 
     void RemoveMax() {
@@ -234,7 +262,9 @@ public:
         if (node->right == nullptr)
             return node->left;
         
-        node->right = RemoveMax(node->right);                                   `
+        node->right = RemoveMax(node->right);
+
+        node->size = node->left->size + node->right->size;
         return node;
     }
 
