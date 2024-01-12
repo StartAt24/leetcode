@@ -214,6 +214,14 @@ public:
 
         return node;
     }
+    
+    int Select(int key) {
+
+    }
+
+    int Rank(int key) {
+
+    }
 
     void RemoveMax() {
         if (IsEmpty()) {
