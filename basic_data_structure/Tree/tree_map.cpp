@@ -225,8 +225,29 @@ public:
         return node;
     }
     
-    int Select(int key) {
+    // 返回 index为idx的 元素， 利用BST 左小右大的性质。
+    // 这里按照元素的大小顺序排序
+    int Select(int idx) {
+        return Select(_root, idx);
+    }
 
+    int Select(Node* node, int idx) {
+        // 这里不需要-1, 因为计算的是左侧节点的个数，未包含当前节点。
+        int currentIdx = node->left->size;
+
+        if (currentIdx > idx) {
+            // 当前ID 比 目标ID大, 去左子树继续搜索。
+            return Select(node->left, idx);
+        }
+
+        if (currentIdx < idx) {
+            // 当前ID 小于 目标ID，去右子树继续搜索，但是要调整idx;
+            // 这里 -size -1 是因为当前节点包含 其左子树已经被搜过了。
+            return Select(node->right, idx-node->left->size-1);
+        }
+
+        // currentIdx == idx;
+        return node->left->size;
     }
 
     // 返回的是 小于当前key的个数, 需要在node节点中增加新的成员变量来辅助完成
@@ -235,8 +256,9 @@ public:
     }
 
     int Rank(int key, Node* node) {
-        if (!node)
-            return 0;
+        // 这里的Rank已经假定Key必定存在
+        // if (!node)
+        //     return 0;
         
         // 如果key 比 node的key要小
         if(key < node->key) {
