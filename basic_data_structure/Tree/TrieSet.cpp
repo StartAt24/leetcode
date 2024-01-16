@@ -32,26 +32,12 @@ public:
     }
 
     bool Contains(string s) {
-        if (s.empty())
-            return false;
+        TrieNode* n = GetNode(_root, s);
 
-        // 寻找 s, 
-        int i = 0;
-        TrieNode* node = _root;
-        while(1) {
-            int idx = static_cast<int>(s[i]);
-            node = node->next[idx];
+        if (n && n->isEnd)
+            return true;
 
-            if (node == nullptr) 
-                return false;
-
-            if(i==s.size())
-                break;
-
-            i++;
-        }
-
-        return node->isEnd;
+        return false;
     }
 
 private:
@@ -70,6 +56,19 @@ private:
         node->next[idx] = Add(node->next[idx], s, idx+1);
 
         return node;
+    }
+
+    TrieNode* GetNode(TrieNode* startPoint, string s) {
+        TrieNode* n = startPoint;
+
+        for (auto c: s) {
+            if (n->next[c] == nullptr)
+                return nullptr;
+
+            n = n->next[c];
+        }
+
+        return n;
     }
 
 private:
