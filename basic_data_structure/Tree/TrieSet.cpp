@@ -19,7 +19,12 @@ public:
     TrieSet() = default;
     // add
     bool Add(string s) {
+        if (s.empty() || Contains(s))
+            return false;
 
+        _root = Add(_root, s, 0);
+        
+        return true;
     }
 
     bool Remove(string s) {
@@ -27,9 +32,46 @@ public:
     }
 
     bool Contains(string s) {
+        if (s.empty())
+            return false;
 
+        // 寻找 s, 
+        int i = 0;
+        TrieNode* node = _root;
+        while(1) {
+            int idx = static_cast<int>(s[i]);
+            node = node->next[idx];
+
+            if (node == nullptr) 
+                return false;
+
+            if(i==s.size())
+                break;
+
+            i++;
+        }
+
+        return node->isEnd;
     }
 
 private:
-    TrieNode _root = nullptr;
+    TrieNode* Add(TrieNode* node, string s, int idx) {
+        if (!node) {
+            // 这里的 node并没有存放任何信息，而是用node的指针来表明指向该node的 值存在
+           node = new TrieNode();
+        }
+
+        if(idx = s.size()) {
+            node->isEnd = true;
+            return node;
+        }
+
+        int idx = static_cast<int>(s[idx]);
+        node->next[idx] = Add(node->next[idx], s, idx+1);
+
+        return node;
+    }
+
+private:
+    TrieNode* _root = nullptr;
 };
