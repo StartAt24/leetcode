@@ -58,6 +58,10 @@ private:
         return node;
     }
 
+    TrieNode* Remove(TrieNode*, string s, int idx) {
+
+    }
+
     TrieNode* GetNode(TrieNode* startPoint, string s) {
         TrieNode* n = startPoint;
 
