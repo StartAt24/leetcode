@@ -23,12 +23,18 @@ public:
             return false;
 
         _root = Add(_root, s, 0);
-        
+        _size++; 
         return true;
     }
 
     bool Remove(string s) {
+        if (!Contains(s)) {
+            return false;
+        }
 
+        _root = Remove(_root, s, 0);
+        _size--;
+        return true;
     }
 
     bool Contains(string s) {
@@ -58,8 +64,26 @@ private:
         return node;
     }
 
-    TrieNode* Remove(TrieNode*, string s, int idx) {
+    TrieNode* Remove(TrieNode* node, string s, int idx) {
+        if (idx == s.size()) {
+            node->isEnd = false;
+        }
+        else {
+            int charIdx = static_cast<int>(s[idx]);
+            node->next[charIdx] = Remove(node->next[charIdx], s, idx+1);
+        }
 
+        // 如果当前节点仍然是一个标志位的话，则不删除
+        if (node->isEnd)
+            return node;
+        
+        // 如果当前节点仍然是某个字符串的一环的话，则也不删除
+        for (auto p: node->next) {
+            if (p)
+                return node;
+        }
+
+        return nullptr;
     }
 
     TrieNode* GetNode(TrieNode* startPoint, string s) {
@@ -77,4 +101,5 @@ private:
 
 private:
     TrieNode* _root = nullptr;
+    int _size = 0;
 };
