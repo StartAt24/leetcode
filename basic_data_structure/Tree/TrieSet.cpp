@@ -1,6 +1,8 @@
 #include <string>
 #include <array>
+#include <vector>
 
+using std::vector;
 using std::string;
 using std::array;
 
@@ -44,6 +46,46 @@ public:
             return true;
 
         return false;
+    }
+
+    string ShortestPrefixOf(string s) {
+        if (s.empty())
+            return s;
+        
+        TrieNode* p = _root;
+        int i = 0;
+        while (p && i < s.size()) {
+            if (p->isEnd)
+                break;
+
+            int idx = static_cast<int>(s[i]);
+            p = p->next[idx];
+
+            i++;
+        }
+
+        if (p && p->isEnd) {
+            return s.substr(0, i);
+        }
+
+        return "";
+    }
+
+    string LongestPrefixOf(string s) {
+
+    }
+
+    // 包含 pattern, pattern里仅支持 “.” 作为通配
+    bool Matches(string s) {
+
+    }
+
+    vector<string> KeysWithPrefix(string s) {
+
+    }
+
+    vector<string> KeysWithPattern(string s) {
+
     }
 
 private:
