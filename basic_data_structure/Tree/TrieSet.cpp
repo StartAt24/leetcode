@@ -72,7 +72,29 @@ public:
     }
 
     string LongestPrefixOf(string s) {
+        if (s.empty())
+            return s;
+        
+        TrieNode* p = _root;
+        int i = 0;
+        int pre_i = 0;
+        while (p && i < s.size()) {
+            if (p->isEnd) {
+                pre_i = i;
+            }
 
+            int idx = static_cast<int>(s[i]);
+            p = p->next[idx];
+
+            i++;
+        }
+
+        if (p && p->isEnd) {
+            // 即最长子串为 原始字符串
+            pre_i = i;
+        }
+
+        return s.substr(0, pre_i);
     }
 
     // 包含 pattern, pattern里仅支持 “.” 作为通配
