@@ -103,7 +103,16 @@ public:
     }
 
     vector<string> KeysWithPrefix(string s) {
+        TrieNode* n = GetNode(_root, s);
+        // 不存在以当前字符串为 前缀的任何字符串
+        if (!n)
+            return {};
 
+        vector<string> res;
+        // 将 当前的 前缀 s存入，用于组成最终的返回结果。
+        Traverse(n, s, res);
+
+        return res;
     }
 
     vector<string> KeysWithPattern(string s) {
@@ -111,6 +120,25 @@ public:
     }
 
 private:
+    void Traverse(TrieNode* node, string pre, vector<string>& res) {
+        if (!node)
+            return;
+
+        if (node->isEnd) {
+            res.push_back(pre);
+            // 不能return!! 这个节点是isEnd，同时也可能是其他字符串的组成的节点
+            // return;
+        }
+        
+        for (int i = 0; i < AsiccConst; i++) {
+            pre.append(1, static_cast<char>(i));
+            Traverse(node->next[i], pre, res);
+            pre.pop_back();
+        }
+
+        return;
+    }
+
     TrieNode* Add(TrieNode* node, string s, int idx) {
         if (!node) {
             // 这里的 node并没有存放任何信息，而是用node的指针来表明指向该node的 值存在
