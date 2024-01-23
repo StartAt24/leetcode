@@ -99,7 +99,7 @@ public:
 
     // 包含 pattern, pattern里仅支持 “.” 作为通配
     bool Matches(string s) {
-
+        return Matches(_root, s, 0);
     }
 
     vector<string> KeysWithPrefix(string s) {
@@ -115,11 +115,67 @@ public:
         return res;
     }
 
+    // keys with pattern 匹配的字符串长度必须和pattern长度一致
     vector<string> KeysWithPattern(string s) {
-
+        vector<string> res;
+        TraverseWithPattern(_root, "", s, 0, res);
+        return res;
     }
 
 private:
+    bool Matches(TrieNode* node, string pattern, int i) {
+        if (!node)
+            return false;
+        
+        if (i == pattern.length())
+            return node->isEnd;
+        
+        char c = pattern[i];
+        if (c == '.') {
+            // loop all
+            for (int i = 0; i < AsiccConst; i++) {
+                // 有一个匹配 则返回 True
+                if (Matches(node->next[i], pattern, i+1))
+                    return true;
+            }
+        }
+
+        return Matches(node->next[(int)pattern[i]], pattern, i+1)
+    }
+
+
+    void TraverseWithPattern(TrieNode* node, string pre, string pattern, int i, vector<string>& res) {
+        // pattern没有跑完 就结束了。
+        if (!node)
+            return;
+        
+        // 已经跑完了 pattern，下一步是查看当前是否是一个字符串的end
+        if (i == pattern.length()) {
+            if (node->isEnd)
+                res.push_back(pre);
+            return;
+        }
+
+        char c = pattern[i];
+        int idx = static_cast<char>(pattern[i]);
+
+        // wildcard
+        if (c == '.') {
+            // 遍历所有的
+            for (int i = 0; i < AsiccConst; i++) {
+                // 其实这里可以优化的，没必要一直操作 Pre
+                pre.append(1, static_cast<char>(i));
+                TraverseWithPattern(node->next[i], pre, pattern, i+1, res);
+                pre.pop_back();
+            }
+        } else {
+            pre.append(1, pattern[i]);
+            TraverseWithPattern(node->next[idx], pre, pattern, i+1, res)
+        }
+
+        return;
+    }
+
     void Traverse(TrieNode* node, string pre, vector<string>& res) {
         if (!node)
             return;
