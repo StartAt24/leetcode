@@ -4,6 +4,7 @@
 
 using std::map;
 using std::string;
+using std::vector;
 using std::unordered_map;
 
 struct TrieNode{
@@ -19,7 +20,20 @@ public:
     }
 
     void erase(string word) {
+        auto n = count(word);
+        n--;
+        if (n == 0) {
+            erase(_root, word, 0);
+        } else {
+            insert(word, n);
+        }
+    }
 
+    vector<string> wordsStartWith(string prefix) {
+        vector<string> res;
+        auto n = getNode(_root, prefix);
+        wordsStartWith(n, prefix, res);
+        return res;
     }
 
     bool contains(string word) {
@@ -35,6 +49,23 @@ public:
     }
 
 private:
+    void wordsStartWith(TrieNode* node, string prefix, vector<string>& res) {
+        // 到了末端了，可以return了
+        if (!node)
+            return;
+
+        if (node->isEnd) {
+            res.push_back(prefix);
+        }
+
+        for (const auto& [k,v] : node->children) {
+            string path = prefix + k;
+            wordsStartWith(v, path, res);
+        }
+
+        return;
+    }
+
     TrieNode* erase(TrieNode* node, string word, int i) {
         if (i == word.length()) {
             node->isEnd = false;
@@ -89,21 +120,26 @@ private:
 class Trie{
 public:
     void insert(string word) {
-
+        _trie.insert(word, 1);
     }
 
     int countWordsEqualTo(string word) {
-
+        return _trie.count(word);
     }
 
     int countWordsStartingWith(string prefix) {
-
+        auto words = _trie.wordsStartWith(prefix);
+        int res = 0;
+        for (auto w : words) {
+            res += _trie.count(w);
+        }
+        return res;
     }
 
     void erase(string word) {
-
+        _trie.erase(word);
     }
 
 private:
-
+    TrieMap _trie;
 };
