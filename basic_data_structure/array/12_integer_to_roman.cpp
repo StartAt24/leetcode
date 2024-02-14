@@ -8,30 +8,45 @@ public:
     string intToRoman(int num) {
         string ret;
         // 个位
-        int n = num%10;
-        if (n>=1 && n<4) {
-            while(n--) {
-                
+        for (int i = 0; i < 13; i++) {
+            while(num >= _values[i]) {
+                num -= _values[i];
+                ret += _reps[i];
             }
         }
-
-        
+        return ret;
     }
 
 private:
-    unordered_map<int, string> _int2Char {
-        {1, 'I'},
-        {4, 'IV'},
-        {5, 'V'},
-        {9, 'IX'},
-        {10, 'X'},
-        {40, 'XL'},
-        {50, 'L'},
-        {90, 'XC'},
-        {100, 'C'},
-        {400, 'CD'},
-        {500, 'D'},
-        {900, 'CM'},
-        {1000, 'M'}
+    int _values[13] = {
+        1000,
+        900,
+        500,
+        400,
+        100,
+        90,
+        50,
+        40,
+        10,
+        9,
+        5,
+        4,
+        1
+    };
+
+    string _reps[13] = {
+        "M",
+        "CM",
+        "D",
+        "CD",
+        "C",
+        "XC",
+        "L",
+        "XL",
+        "X",
+        "IX",
+        "V",
+        "IV",
+        "I"
     };
 };
