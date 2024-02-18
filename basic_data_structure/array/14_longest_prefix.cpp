@@ -5,10 +5,36 @@ using namespace std;
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& strs) {
+        if (strs.size() == 0)
+            return "";
+        // assume the first string as the common prefix;
+        string res = strs[0];
+        for (auto s: strs) {
+            res = CommonPrefix(res, s);
+        }
 
+        return res;
+    }
+private:
+    string CommonPrefix(string s1, string s2) {
+        string ret;
+        int size1 = s1.size();
+        int size2 = s2.size();
+        int minSize = std::min(size1, size2);
+        for (int i = 0; i < minSize; i++) {
+            if(s1[i] == s2[i]) {
+                ret += s1[i];
+            } else {
+                break;
+            }
+        }
+
+        return ret;
     }
 };
 
+
+// Trie Tree cannot help solve this problem.
 struct TrieNode{
     TrieNode* children[26] = {};
     bool isEnd = false;
