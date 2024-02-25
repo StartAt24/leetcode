@@ -33,5 +33,9 @@ private:
         }
     }
 
+    void GenerateNextArray(string pattern) {
+        
+    }
+
     vector<int> _next;
 };
