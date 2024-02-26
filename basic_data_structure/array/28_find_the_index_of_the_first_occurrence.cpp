@@ -34,7 +34,18 @@ private:
     }
 
     void GenerateNextArray(string pattern) {
-        
+        // offset 1
+        _next[0] = -1;
+        int i = 0, j = -1;
+        while(i<pattern.size()) {
+            if (j == -1 || pattern[i] == pattern[j]) {
+                i++;
+                j++;
+                _next[i] = j;
+            } else {
+                j = _next[j];
+            }
+        }
     }
 
     vector<int> _next;
