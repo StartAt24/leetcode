@@ -7,15 +7,20 @@ public:
     bool isPalindrome(string s) {
         int left = 0, right = s.size()-1;
         while(left < right) {
-            while(!std::isalnum(s[left])) {
+            while(left < s.size() && !std::isalnum(s[left])) {
                 left++;
             }
 
-            while(!std::isalnum(s[right])) {
+            while(right>=0 && !std::isalnum(s[right])) {
                 right--;
             }
-            if (s[left] != s[right])
-                return false;
+
+            if (left < right) {
+                if (tolower(s[left]) != tolower(s[right])) 
+                    return false;
+                left++;
+                right--;
+            }
         }
         return true;
     }
