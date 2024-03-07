@@ -7,6 +7,7 @@ public:
         int maxLeft = 0, maxRight = 0;
         int ret = 0;
         while(left < right) {
+            //注意！ 随着指针的移动 max的值 是不会减小的。
             maxLeft = max(maxLeft, height[left]);
             maxRight = max(maxRight, height[right]);
 
