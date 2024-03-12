@@ -6,8 +6,9 @@ public:
         if (!root)        
             return nullptr;
 
+        TreeNode* l = root->left;
         root->left = invertTree(root->right);
-        root->right = invertTree(root->left);
+        root->right = invertTree(l);
 
         return root;
     }
