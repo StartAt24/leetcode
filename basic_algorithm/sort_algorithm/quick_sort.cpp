@@ -7,6 +7,7 @@ void QuickSort(vector<int>& arr, int L, int R) {
     int l = L, r = R;
     int pivot = arr[l];
     while (l < r) {
+        // the first step should be right go first in order to match the last switch operation
         while(l<r && arr[r] >= pivot) {
             r--;
         }
