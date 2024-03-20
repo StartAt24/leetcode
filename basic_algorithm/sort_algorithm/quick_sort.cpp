@@ -1,4 +1,5 @@
 #include <vector>
+// quick sort n*log(n)
 using std::vector;
 void QuickSort(vector<int>& arr, int L, int R) {
     if (L>=R)
