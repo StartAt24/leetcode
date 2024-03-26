@@ -10,7 +10,11 @@ public:
         int lastElement = preorder.back();
         TreeNode* lastOne = new TreeNode(lastElement);
 
-
+    }
+private:
+    TreeNode* buildTreeInternal(vector<int>& preorder, int p_l, int p_r,
+                                vector<int>& inorder, int i_l, int i_r)
+    {
 
     }
 };
