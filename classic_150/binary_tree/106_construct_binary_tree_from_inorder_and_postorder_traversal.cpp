@@ -15,6 +15,8 @@ public:
         
     }
 private:
+    // inorder:     [left_child] root [right_child]
+    // postorder:   [left_child] [right_cihld] [root]
     TreeNode* build(vector<int>& inorder, int inStart, int inEnd,
                     vector<int>& postorder, int postStart, int postEnd) {
 
