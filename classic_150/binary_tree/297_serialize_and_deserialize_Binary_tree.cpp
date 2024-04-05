@@ -65,3 +65,42 @@ private:
     const string _delim = ",";
     const string _nullChild = "#";
 };
+
+#include <queue>
+// 层序遍历
+void traverse(TreeNode* n) {
+    if (!n)
+        return;
+    queue<TreeNode*> q;
+    q.push(n);
+    while (!q.empty()) {
+        TreeNode* cur = q.front();
+        q.pop();
+        // 
+        if (cur->left) {
+            q.push(cur->left);
+        }
+        if (cur->right) {
+            q.push(cur->right);
+        }
+    }
+}
+
+// 这样的遍历会将 nullptr也加入到 queue中
+void traverseWithNullptr(TreeNode* n) {
+    if (!n)
+        return;
+    queue<TreeNode*> q;
+    q.push(n);
+
+    while (!q.empty()) {
+        TreeNode* cur = q.front();
+        q.pop();
+
+        if (!cur)
+            continue;
+        
+        q.push(cur->left);
+        q.push(cur->right);
+    }
+}
