@@ -104,3 +104,66 @@ void traverseWithNullptr(TreeNode* n) {
         q.push(cur->right);
     }
 }
+
+string SEP = ",";
+string NULLNode = "#";
+string serializeLayers(TreeNode* root) {
+    if(!root)
+        return "";
+    stringstream ss;
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty()) {
+        auto cur = q.front();
+        q.pop();
+
+        if (!cur) {
+            ss << NULLNode << SEP;
+            continue;
+        }
+
+        ss << cur->val << SEP; 
+        q.push(cur->left);
+        q.push(cur->right);
+    }
+    return ss.str();
+}
+
+TreeNode* deserializeLayers(string data) {
+    if (data.empty())
+        return nullptr;
+    vector<string> nodes;
+    stringstream ss(data);
+    string item;
+    while(getline(ss, item, ',')) {
+        nodes.push_back(item);
+    }
+
+    auto root = new TreeNode(stoi(nodes[0]));
+
+    queue<TreeNode*> q;
+    q.push(root);
+
+    for (int i = 1; i < nodes.size();) {
+        TreeNode* parent = q.front();
+        q.pop();
+
+        string left = nodes[i++];
+        if (left != NULLNode) {
+            parent->left = new TreeNode(stoi(left));
+            q.push(parent->left);
+        } else {
+            parent->left = nullptr;
+        }
+
+        string right = nodes[i++];
+        if (right != NULLNode) {
+            parent->left = new TreeNode(stoi(right));
+            q.push(parent->right);
+        } else {
+            parent->right = nullptr;
+        }
+    }
+
+    return root;
+}
