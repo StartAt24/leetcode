@@ -17,8 +17,8 @@ public:
 private:
     struct Pair {
         Pair(int val, int id) {
-            val = val;
-            id = id;
+            this->val = val;
+            this->id = id;
         }
         Pair() {
             val = 0;
@@ -40,7 +40,7 @@ private:
         int mid = lo + (hi-lo)/2;
         sort(arr, lo, mid);
         sort(arr, mid+1, hi);
-        merge(arr, lo, mid+1, hi);
+        merge(arr, lo, mid, hi);
     }
 
     void merge(vector<Pair>& arr, int lo, int mid, int hi) {
@@ -54,15 +54,17 @@ private:
             // 题目要求的是比当前元素小的元素
             if (l == mid+1) {
                 arr[i] = _temp[r++];
-            } else if (r == hi) {
+            } else if (r == hi+1) {
                 arr[i] = _temp[l++];
                 // 这个时候右边的数组已经遍历完了，只剩下左边的，且左边后续的都是比当前的大的,所以
                 _res[arr[i].id] += r - (mid+1);
-            } else if (arr[l].val < arr[r].val) {
+            } else if (_temp[l].val <= _temp[r].val) {
                 // 当前左侧元素比右侧元素小
                 arr[i] = _temp[l++];
                 // 这个时候 左侧剩余的元素都比当前元素大，那么只有右侧的元素小于当前元素
                 _res[arr[i].id] += r - (mid+1);
+            } else {
+                arr[i]  = _temp[r++];
             }
         }
     }
