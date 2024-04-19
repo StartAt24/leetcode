@@ -23,3 +23,12 @@ private:
     int _count = 0;
     int _res = -1;
 };
+
+// need to update this "size" member when insert/remove element
+struct TreeNodeEx {
+    int val;
+    // 以这个节点为根的树节点的总数
+    int size;
+    TreeNodeEx* left;
+    TreeNodeEx* right;
+};
