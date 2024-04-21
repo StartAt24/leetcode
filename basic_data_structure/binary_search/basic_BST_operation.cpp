@@ -52,7 +52,7 @@ TreeNode* deleteNode(TreeNode* root, int key) {
         min_n->right = root->right;
         root = min_n;
     }
-    
+
     return root;
 }
 
