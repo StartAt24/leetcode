@@ -16,49 +16,43 @@ TreeNode* insert(TreeNode* root, int val) {
     return root;
 }
 
-TreeNode* maxNode(TreeNode* node) {
-    if (!node || !node->right)
+TreeNode* minNode(TreeNode* node) {
+    if (!node->left)
         return node;
-    return maxNode(node->right);
+    return minNode(node->left);
 }
 
-TreeNode* remove(TreeNode* root, int val) {
+TreeNode* deleteNode(TreeNode* root, int key) {
     // not found
     if (!root)
         return nullptr;
 
-    if (root->val > val) {
-        return remove(root->left, val);
+    if (root->val > key) {
+        root->left =  deleteNode(root->left, key);
+    } else if (root->val < key) {
+        root->right = deleteNode(root->right, key);
+    } else {
+        // 如果只有一个存在的话, 因为前面已经排除了两者均为空的情况了。
+        // 但是不能用下面这个写法，因为这个不能排除两者都为空的情况。应该改为判断哪个不存在
+        // 即这种case下 可以说明至少有一个子节点是空的
+        // if (root->right) 
+        //     return root->right;
+        if (!root->left)
+            return root->right;
+        if (!root->right)
+            return root->left;
+
+        // both left and right exist 
+        // swap max value of left tree or min value of right tree;
+        auto min_n = minNode(root->right);
+        root->right = deleteNode(root->right, min_n->val);
+
+        // 指针操作, 可以避免把二叉树中的值拷贝 带来的object copy的问题。
+        min_n->left = root->left;
+        min_n->right = root->right;
+        root = min_n;
     }
-    if (root->val < val) {
-        return remove(root->right, val);
-    }
-
-    // root->val = val
-    // root is the leaf node, remove it directly
-    if (!root->left && !root->right)
-        return nullptr;
-
-    // 如果只有一个存在的话, 因为前面已经排除了两者均为空的情况了。
-    // 但是不能用下面这个写法，因为这个不能排除两者都为空的情况。应该改为判断哪个不存在
-    // 即这种case下 可以说明至少有一个子节点是空的
-    // if (root->right) 
-    //     return root->right;
-    if (!root->left)
-        return root->right;
-    if (!root->right)
-        return root->left;
-
-    // both left and right exist 
-    // swap max value of left tree or min value of right tree;
-    auto max_node = maxNode(root->left);
-    root->left = remove(root->left, max_node->val);
-
-    // 指针操作, 可以避免把二叉树中的值拷贝 带来的object copy的问题。
-    max_node->left = root->left;
-    max_node->right = root->right;
-    root = max_node;
-
+    
     return root;
 }
 
