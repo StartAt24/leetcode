@@ -11,7 +11,6 @@ public:
             for (int j = i; j < arr.size(); j++) {
                 sum = arr[i] + arr[j];
             }
-            
         }
     }
 }
