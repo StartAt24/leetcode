@@ -5,19 +5,29 @@ using namespace std;
 class Solution {
 public:
     vector<TreeNode*> generateTrees(int n) {
-        // 假设这个数是 [1,2]
-        // 则以1为root 就一种情况，以2为root 也是一种情况
-
-
-
-
-
+        return generateTrees(1, n);
     }
 private:
-    TreeNode* generateTrees(int l, int r) {
-        if (l > r)
-            return nullptr;
-        generateTrees();
+    vector<TreeNode*> generateTrees(int l, int r) {
+        vector<TreeNode*> res;
+        if (l > r) {
+            res.emplace_back(nullptr);
+            return res;
+        }
+
+        for (int i = l; i <= r; i++) {
+            auto leftTrees = generateTrees(l, i-1);
+            auto rightTrees = generateTrees(i+1, r);
+
+            for (const auto& left : leftTrees) {
+                for (const auto& right : rightTrees) {
+                    TreeNode* root = new TreeNode(i);
+                    root->left = left;
+                    root->right = right;
+                    res.emplace_back(root);
+                }
+            }
+        }
+        return res;
     }
-    vector<vector<int>> _cache(9, vector<int>(9, 0));
 };
