@@ -33,7 +33,7 @@ private:
 
             if (left <= right)
                 break;
-                
+
             swap (nums, left, right);
         }
         swap(nums, lo, right);
