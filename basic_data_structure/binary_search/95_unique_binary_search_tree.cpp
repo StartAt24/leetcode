@@ -31,3 +31,8 @@ private:
         return res;
     }
 };
+// assume [1,2]
+// it has two unique BST.
+// i = 1; i <=2; i++
+// generateTrees(1, 0) -> {nullptr}
+// generateTrees(2, 2) -> i =2; i<=2 -> 2,1, 3,2 -> {nullptr}, {nullptr}
