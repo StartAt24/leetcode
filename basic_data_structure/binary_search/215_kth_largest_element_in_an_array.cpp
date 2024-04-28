@@ -31,9 +31,9 @@ private:
         // 将选择的pivot排序到正确的位置
         int p = partition(nums, lo, hi);
         if (p < _targetPisition) {
-            sort(nums, p+1, hi);
+            return sort(nums, p+1, hi);
         } else {
-            sort(nums, lo, p-1);
+            return sort(nums, lo, p-1);
         } else {
             _res =  nums[p];
             return;
@@ -54,9 +54,10 @@ private:
 
             if (left >= right)
                 break;
+                
             swap(nums[left], nums[right]);
         }
-        swap(nums[lo], mums[right]);
+        swap(nums[lo], nums[right]);
         return right;
     }
     
