@@ -11,6 +11,7 @@ public:
         
         auto left = lowestCommonAncestor(root->left, p, q);
         auto right = lowestCommonAncestor(root->right, p, q);
+        // why left or right return the top node?g
         if (left && right)
             return root;
         
