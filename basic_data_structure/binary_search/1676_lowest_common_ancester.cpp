@@ -6,7 +6,7 @@ using std::set;
 
 TreeNode* lowestCommonAncestor(TreeNode* root, vector<TreeNode*>& nodes) {
     unordered_set<int> values(nodes.begin(), nodes.end());
-
+    return find(root, values);
 }
 
 TreeNode* find(TreeNode* root, unordered_set<int>& values) {
