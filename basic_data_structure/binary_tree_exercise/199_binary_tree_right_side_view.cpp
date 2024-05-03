@@ -26,6 +26,29 @@ public:
         return _res;
     }
 private:
-    
     vector<int> _res;
+};
+
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        traverse(root);
+        return _res;
+    }
+private:
+    void traverse(TreeNode* root) {
+        if (!root)
+            return;
+        _depth++;
+        if (_res.size() < depth) {
+            _res.push_back(root->val);
+        }
+
+        traverse(root->right);
+        traverse(root->left);
+        _depth--;
+    }
+
+    vector<int> _res;
+    int _depth = 0;
 };
