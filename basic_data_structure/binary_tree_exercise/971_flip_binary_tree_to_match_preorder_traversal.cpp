@@ -22,6 +22,8 @@ private:
         }
 
         _idx++;
+        // 为什么这里只判断左边就行了？
+        // 虽然是先序，但是如果右侧
         if (n->left && n->left->val != _voyage[_idx]) {
             auto temp = n->right;
             n->right = n->left;
