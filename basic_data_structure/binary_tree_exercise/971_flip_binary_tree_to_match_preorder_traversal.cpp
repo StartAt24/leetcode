@@ -24,6 +24,7 @@ private:
         _idx++;
         // 为什么这里只判断左边就行了？
         // 虽然是先序，但是如果右侧
+        // 还是没看懂这里的逻辑，为什么可以通过？
         if (n->left && n->left->val != _voyage[_idx]) {
             auto temp = n->right;
             n->right = n->left;
