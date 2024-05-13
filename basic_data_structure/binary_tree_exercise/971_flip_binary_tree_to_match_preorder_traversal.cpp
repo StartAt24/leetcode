@@ -25,6 +25,7 @@ private:
         // 为什么这里只判断左边就行了？
         // 虽然是先序，但是如果右侧
         // 还是没看懂这里的逻辑，为什么可以通过？
+        // A: 这是因为这道题目的输入决定的，这道题目的输入 并没 null节点，所以不用考虑左右相反的情况
         if (n->left && n->left->val != _voyage[_idx]) {
             auto temp = n->right;
             n->right = n->left;
