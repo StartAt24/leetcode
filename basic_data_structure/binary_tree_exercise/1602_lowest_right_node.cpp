@@ -36,6 +36,7 @@ private:
     }
 
     // 先序遍历的结果，当第二次遍历到同一个层级的时候，就是上一次这个层级的 右侧节点。
+    // consider the sequence of the traverse, and each pointer.
     void Traverse(TreeNode* node, TreeNode* target, int depth) {
         if (!node)
             return;
