@@ -22,16 +22,16 @@ private:
         int left = lo+1;
         int right = hi;
 
-        while (left <= right) {
-            while(left <= hi && nums[left] < pivot) {
+        while (true) {
+            while(left <= right && nums[left] < pivot) {
                 left++;
             }
 
-            while (right >= lo+1 && nums[right] > pivot) {
+            while (left <= right && nums[right] > pivot) {
                 right--;
             }
 
-            if (left <= right)
+            if (left > right)
                 break;
 
             swap (nums, left, right);
